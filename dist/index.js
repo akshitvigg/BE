@@ -21,8 +21,6 @@ const db_1 = require("./db");
 const middleware_1 = require("./middleware");
 const utils_1 = require("./utils");
 const cors_1 = __importDefault(require("cors"));
-const dotenv_1 = __importDefault(require("dotenv"));
-dotenv_1.default.config();
 const app = (0, express_1.default)();
 app.use(express_1.default.json());
 app.use((0, cors_1.default)());
@@ -239,9 +237,10 @@ app.get("/api/v1/:sharelink", (req, res) => __awaiter(void 0, void 0, void 0, fu
     }
 }));
 const mongooseConnect = () => __awaiter(void 0, void 0, void 0, function* () {
-    yield mongoose_1.default.connect("mongodb+srv://akshitvig213:NBEVF9stJg1gYxeB@cluster0.wvw0s.mongodb.net/Second-Brain");
+    yield mongoose_1.default.connect(process.env.MONGO_URL);
     app.listen(port, () => {
         console.log(`started listening on PORT ${port}`);
     });
 });
+console.log(process.env.MONGO_URL);
 mongooseConnect();

@@ -8,7 +8,6 @@ import { auth } from "./middleware";
 import { random } from "./utils";
 import cors from "cors";
 import dotenv from "dotenv";
-dotenv.config();
 
 const app = express();
 app.use(express.json());
@@ -240,12 +239,10 @@ app.get("/api/v1/:sharelink", async (req, res) => {
 });
 
 const mongooseConnect = async () => {
-  await mongoose.connect(
-    "mongodb+srv://akshitvig213:NBEVF9stJg1gYxeB@cluster0.wvw0s.mongodb.net/Second-Brain"
-  );
+  await mongoose.connect(process.env.MONGO_URL as string);
   app.listen(port, () => {
     console.log(`started listening on PORT ${port}`);
   });
 };
-
+console.log(process.env.MONGO_URL);
 mongooseConnect();
