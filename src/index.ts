@@ -7,7 +7,8 @@ import { ContentModel, LinkModel, UserModel } from "./db";
 import { auth } from "./middleware";
 import { random } from "./utils";
 import cors from "cors";
-require("dotenv").config();
+import dotenv from "dotenv";
+dotenv.config();
 
 const app = express();
 app.use(express.json());
@@ -238,25 +239,13 @@ app.get("/api/v1/:sharelink", async (req, res) => {
   }
 });
 
-const mongoUrl = process.env.MONGO_URL;
-
-if (!mongoUrl) {
-  throw new Error("MONGOURL is not defined in the environment variables");
-}
-
 const mongooseConnect = async () => {
-  try {
-    await mongoose.connect(mongoUrl);
-
-    app.listen(port, () => {
-      console.log(`Started listening on PORT ${port}`);
-    });
-  } catch (error) {
-    console.error("Error connecting to MongoDB:", error);
-    process.exit(1);
-  }
+  await mongoose.connect(
+    "mongodb+srv://akshitvig213:NBEVF9stJg1gYxeB@cluster0.wvw0s.mongodb.net/Second-Brain"
+  );
+  app.listen(port, () => {
+    console.log(`started listening on PORT ${port}`);
+  });
 };
-
-console.log("Mongo URL: ", mongoUrl);
 
 mongooseConnect();

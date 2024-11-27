@@ -21,7 +21,8 @@ const db_1 = require("./db");
 const middleware_1 = require("./middleware");
 const utils_1 = require("./utils");
 const cors_1 = __importDefault(require("cors"));
-require("dotenv").config();
+const dotenv_1 = __importDefault(require("dotenv"));
+dotenv_1.default.config();
 const app = (0, express_1.default)();
 app.use(express_1.default.json());
 app.use((0, cors_1.default)());
@@ -237,21 +238,10 @@ app.get("/api/v1/:sharelink", (req, res) => __awaiter(void 0, void 0, void 0, fu
         });
     }
 }));
-const mongoUrl = process.env.MONGO_URL;
-if (!mongoUrl) {
-    throw new Error("MONGOURL is not defined in the environment variables");
-}
 const mongooseConnect = () => __awaiter(void 0, void 0, void 0, function* () {
-    try {
-        yield mongoose_1.default.connect(mongoUrl);
-        app.listen(port, () => {
-            console.log(`Started listening on PORT ${port}`);
-        });
-    }
-    catch (error) {
-        console.error("Error connecting to MongoDB:", error);
-        process.exit(1);
-    }
+    yield mongoose_1.default.connect("mongodb+srv://akshitvig213:NBEVF9stJg1gYxeB@cluster0.wvw0s.mongodb.net/Second-Brain");
+    app.listen(port, () => {
+        console.log(`started listening on PORT ${port}`);
+    });
 });
-console.log("Mongo URL: ", mongoUrl);
 mongooseConnect();
