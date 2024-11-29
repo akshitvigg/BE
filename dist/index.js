@@ -205,6 +205,7 @@ app.post("/api/v1/share", middleware_1.auth, (req, res) => __awaiter(void 0, voi
     }
 }));
 app.get("/api/v1/:sharelink", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    var _a;
     const hash = req.params.sharelink;
     try {
         const link = yield db_1.LinkModel.findOne({
@@ -225,6 +226,10 @@ app.get("/api/v1/:sharelink", (req, res) => __awaiter(void 0, void 0, void 0, fu
                 message: "user is not found",
             });
             return;
+        }
+        const isBrowser = (_a = req.headers.accept) === null || _a === void 0 ? void 0 : _a.includes("text/html");
+        if (isBrowser) {
+            return res.redirect(`https://secondbrainn.netlify.app/shared/${hash}`);
         }
         res.status(200).json({
             username: user.username,

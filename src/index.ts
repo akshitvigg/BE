@@ -226,6 +226,11 @@ app.get("/api/v1/:sharelink", async (req, res) => {
       });
       return;
     }
+    const isBrowser = req.headers.accept?.includes("text/html");
+
+    if (isBrowser) {
+      return res.redirect(`https://secondbrainn.netlify.app/shared/${hash}`);
+    }
 
     res.status(200).json({
       username: user.username,
